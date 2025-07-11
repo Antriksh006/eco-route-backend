@@ -6,6 +6,7 @@ import io # Import the io module
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
+from dotenv import load_dotenv
 
 from app.core import calculate_route_streamed
 from app.utils import check_api_keys, load_co2_data, co2_map
@@ -13,6 +14,11 @@ from app.models import RouteRequest, RouteResponse
 
 from app.database import SessionLocal, create_db_and_tables
 from app.models import RouteRequest, RouteResponse
+# Load environment variables from .env file
+load_dotenv()
+
+API_KEY_GOOGLE = os.getenv("API_KEY_GOOGLE")
+API_KEY_TOMTOM = os.getenv("API_KEY_TOMTOM")
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -40,8 +46,6 @@ def get_db():
 async def startup_event():
     """Initialize data and check API keys on startup."""
     create_db_and_tables() # Create tables
-    os.environ["API_KEY_GOOGLE"] = os.getenv("API_KEY_GOOGLE", "AIzaSyBn6r80g6qTuIgaKnJpK4-oWAkWls5YtL0")
-    os.environ["API_KEY_TOMTOM"] = os.getenv("API_KEY_TOMTOM", "WzqAKEeo0JHT9Z3SU05ZkgL8rqFbzHGN")
 
     check_api_keys()
     load_co2_data()
@@ -132,6 +136,4 @@ if __name__ == "__main__":
     import uvicorn
     # For local development, you can set API keys directly or via environment variables
     # These will be picked up by os.getenv in startup_event
-    os.environ["API_KEY_GOOGLE"] = "AIzaSyBn6r80g6qTuIgaKnJpK4-oWAkWls5YtL0"
-    os.environ["API_KEY_TOMTOM"] = "WzqAKEeo0JHT9Z3SU05ZkgL8rqFbzHGN"
     uvicorn.run(app, host="0.0.0.0", port=8000)
