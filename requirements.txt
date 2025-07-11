@@ -1,0 +1,39 @@
+# FastAPI and ASGI
+fastapi
+uvicorn[standard]
+
+# CORS
+starlette
+
+# Database (SQLAlchemy + PostgreSQL/MySQL support)
+sqlalchemy
+databases
+
+# Pydantic for models
+pydantic
+
+# Geospatial + Maps
+geopy
+googlemaps
+osmnx
+networkx
+polyline
+
+# Data handling
+pandas
+requests
+python-dotenv
+
+# Optional (based on usage of ThreadPoolExecutor and asyncio)
+asyncio
+
+# Logging, Hashlib, Math, Time, etc. are standard libs and do not need to be listed.
+
+# Gunicorn for production (optional)
+gunicorn
+
+# Environment
+python-dotenv
+# Database drivers
+psycopg2-binary
+
